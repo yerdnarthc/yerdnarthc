@@ -1,0 +1,8 @@
+pyproject.toml
+src/ascii_converter/__init__.py
+src/ascii_converter/mapping.py
+src/ascii_profile.egg-info/PKG-INFO
+src/ascii_profile.egg-info/SOURCES.txt
+src/ascii_profile.egg-info/dependency_links.txt
+src/ascii_profile.egg-info/top_level.txt
+tests/test_mapping.py
