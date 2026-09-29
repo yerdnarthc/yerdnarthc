@@ -2,7 +2,9 @@
 
 from PIL import Image
 
-CHARSET = "@%#A$&R?TBH|][()}{wgarh!:;i=^~+<>*'-_,. "    # 40 characters in length
+CHARSET = "@%#A$&R?TBH|][()wgarh!:;i=^~+<>*'-_,. "    # 38 characters in length
+
+# ================== ASCII MAPPING FUNCTIONS ==================
 
 def pixel_to_char(value) -> str:
     """
@@ -21,8 +23,11 @@ def value_to_charset_index(value):
     if not (0 <= value <= 255):
         raise ValueError("Pixel value must be between 0 and 255.")
 
-    return int((value / 255) * (len(CHARSET) - 1))
+    inverted_value = 255 - value  # Invert the pixel value for mapping
+    return int((inverted_value / 255) * (len(CHARSET) - 1))
 
+
+# ================== TEMPORARY FUNCTIONS FOR TESTING PURPOSES ==================
 
 def make_checkerboard(width, height):
     """
