@@ -2,7 +2,7 @@
 
 from PIL import Image
 
-CHARSET = "@%#A$&R?TBH|][()wgarh!:;i=^~+<>*'-_,. "    # 38 characters in length
+CHARSET = "@#%*+=-:. "    # 10 characters from darkest to lightest
 
 # ================== ASCII MAPPING FUNCTIONS ==================
 
