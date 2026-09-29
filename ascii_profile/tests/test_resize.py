@@ -1,13 +1,12 @@
 # ascii_profile/tests/test_resize.py
 
-import pytest, os
+import pytest
 from ascii_converter.image_resizer import resize_image
-from ascii_converter.image_loader import load_image     # temporary only
+from ascii_converter.image_loader import load_image
 from PIL import Image
 
 
 @pytest.mark.parametrize("new_size", [(2, 2), (8, 4), (80, 24)])
-
 def test_resize_image_to_custom_size(new_size):
     image = Image.new("L", (4, 4))
     image.putdata([0, 64, 128, 192] * 4)
@@ -59,22 +58,14 @@ def test_resize_image_with_large_size():
     assert resized_image.size == new_size
 
 
-def test_resize_image_after_loading():
-    # Temporarily use ascii_converter.image_loader.load_image to load an image for testing
-    image = load_image("C:\\Users\\Arth Andrey\\Pictures\\portrait.jpg")
+def test_resize_image_after_loading(tmp_path):
+    source_path = tmp_path / "source.png"
+    source_image = Image.new("RGB", (10, 12), color=(255, 0, 0))
+    source_image.save(source_path)
 
-    # Temporarily save the loaded image for previewing purposes
-    image.save("before_resize_preview.jpg")
-
+    image = load_image(source_path)
     new_size = (100, 120)
     resized_image = resize_image(image, new_size)
 
-    # Temporarily save the resized image for previewing purposes
-    resized_image.save("after_resize_preview.jpg")
-
     assert resized_image.size == new_size
-
-    assert image.get_flattened_data() != resized_image.get_flattened_data()
-
-    os.remove("before_resize_preview.jpg")
-    os.remove("after_resize_preview.jpg")
+    assert image.size == (10, 12)

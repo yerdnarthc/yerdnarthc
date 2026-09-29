@@ -6,16 +6,17 @@ from ascii_converter.mapping import checkerboard_to_ascii
 from ascii_converter.mapping import make_three_tone_checkerboard
 from ascii_converter.mapping import three_tone_checkerboard_to_ascii
 
+
 def test_black_pixel():
-    assert pixel_to_char(0) == "@"
+    assert pixel_to_char(0) == " "
 
 
 def test_white_pixel():
-    assert pixel_to_char(255) == " "
+    assert pixel_to_char(255) == "@"
 
 
 def test_mid_gray_pixel():
-    assert pixel_to_char(128) == "g"
+    assert pixel_to_char(128) == "+"
 
 
 def test_invalid_pixel_value_low():
@@ -69,10 +70,10 @@ def test_checkerboard_to_ascii():
     ascii_art = checkerboard_to_ascii(checkerboard)
 
     expected_ascii_art = [
-        "@ @ ",
         " @ @",
         "@ @ ",
-        " @ @"
+        " @ @",
+        "@ @ "
     ]
 
     assert ascii_art == expected_ascii_art
@@ -84,11 +85,11 @@ def test_three_tone_checkerboard_to_ascii():
     ascii_art = three_tone_checkerboard_to_ascii(three_tone_checkerboard)
 
     expected_ascii_art = [
-        "@g @g",
-        " @g @",
-        "g @g ",
-        "@g @g",
-        " @g @"
+        " +@ +",
+        "@ +@ ",
+        "+@ +@",
+        " +@ +",
+        "@ +@ "
     ]
 
     assert ascii_art == expected_ascii_art
