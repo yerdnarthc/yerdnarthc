@@ -7,8 +7,8 @@ from ascii_converter.converter import image_to_ascii
 
 
 
-image = load_image("C:\\Users\\Arth Andrey\\Pictures\\portrait.jpg")  # Load the image
-width, height = 100, 50 # Desired dimensions
+image = load_image("C:\\Users\\Arth Andrey\\Pictures\\portrait_4.png")  # Load the image
+width, height = 60, 35 # Desired dimensions
 image = resize_image(image, (width, height))  # Resize the image
 ascii_art = image_to_ascii(image)  # Convert the image to ASCII
 
