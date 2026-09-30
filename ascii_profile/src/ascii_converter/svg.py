@@ -75,3 +75,43 @@ def ascii_to_svg(
 
     svg_lines.append("</svg>")
     return "\n".join(svg_lines)
+
+
+def ascii_to_svg_group(
+    ascii_art: str,
+    font_size: int = 10,
+    font_family: str = "monospace",
+    char_width: float | None = None,
+) -> str:
+    """Render ASCII art as an SVG <g> element."""
+
+    if font_size <= 0:
+        raise ValueError("font_size must be greater than 0.")
+
+    if char_width is None:
+        char_width = font_size
+
+    if char_width <= 0:
+        raise ValueError("char_width must be greater than 0.")
+
+    lines = ascii_art.splitlines()
+
+    svg_lines = [
+        "<g>",
+    ]
+
+    for y, line in enumerate(lines):
+        for x, character in enumerate(line):
+            svg_lines.append(
+                f'<text '
+                f'x="{x * char_width}" '
+                f'y="{(y + 1) * font_size}" '
+                f'font-family="{escape(font_family, quote=True)}" '
+                f'font-size="{font_size}px">'
+                f"{escape(character)}"
+                f"</text>"
+            )
+
+    svg_lines.append("</g>")
+
+    return "\n".join(svg_lines)
