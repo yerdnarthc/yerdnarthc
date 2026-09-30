@@ -1,12 +1,17 @@
 import xml.etree.ElementTree as ET
 
 from ascii_converter.layout import (
+	ADDITIONS_ACCENT,
+	DELETIONS_ACCENT,
 	DETAILS_FOREGROUND,
 	INFO_CHAR_WIDTH,
 	INFO_RIGHT_X,
 	SECONDARY,
+	additions_segment,
 	build_profile_svg,
 	colored_text_row,
+	deletions_segment,
+	format_count,
 	github_stats_row,
 	key_value,
 	make_divider,
@@ -72,6 +77,31 @@ def test_github_stats_row_separates_columns_and_aligns_right_value():
 	assert rendered_text[0] == "Repos: "
 	assert rendered_text[-2:] == ["Stars: ", "342"]
 	assert int(stars_value.attrib["x"]) + int(stars_value.attrib["textLength"]) == INFO_RIGHT_X
+
+
+def test_format_count_groups_thousands():
+	assert format_count(0) == "0"
+	assert format_count(950) == "950"
+	assert format_count(1000) == "1,000"
+	assert format_count(10000) == "10,000"
+	assert format_count(100000) == "100,000"
+	assert format_count(1000000) == "1,000,000"
+	assert format_count(2116) == "2,116"
+	assert format_count(446276) == "446,276"
+
+
+def test_additions_segment_is_green_with_plus_suffix():
+	text, fill = additions_segment(523178)
+
+	assert text == "523,178++"
+	assert fill == ADDITIONS_ACCENT
+
+
+def test_deletions_segment_is_red_with_minus_suffix():
+	text, fill = deletions_segment(76902)
+
+	assert text == "76,902--"
+	assert fill == DELETIONS_ACCENT
 
 
 # def test_profile_svg_contains_github_stats_section():

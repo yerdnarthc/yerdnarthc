@@ -141,7 +141,20 @@ def test_profile_information_is_present_and_same_in_svg(test_github_stats):
     for value in expected_text:
         assert value in rendered_text
 
-    assert "10 {Contributed: TBA}" in rendered_text
+    # GitHub Stats reflect the live layout pipeline:
+    # - left keys carry the "." bullet like key_value rows
+    # - repos + contributions render as one value block "10 {Contributed: 300}"
+    #   (segmented <tspan>s joined by itertext)
+    # - two-col divider is a single "|" with equal gaps
+    # - LOC row renders as one value block "1,000 (700++, 200--)"
+    assert ". Repos: " in rendered_text
+    assert ". Commits: " in rendered_text
+    assert ". Lines of Code on GitHub: " in rendered_text
+    assert "Stars: " in rendered_text
+    assert "Followers: " in rendered_text
+    assert "|" in rendered_text
+    assert "10 {Contributed: 300}" in rendered_text
     assert "50" in rendered_text
     assert "100" in rendered_text
     assert "200" in rendered_text
+    assert "1,000 (700++, 200--)" in rendered_text
