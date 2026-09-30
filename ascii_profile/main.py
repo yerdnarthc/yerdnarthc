@@ -1,5 +1,7 @@
 # ascii_profile/main.py
 
+import os
+
 from PIL import Image
 from ascii_converter.image_loader import load_image
 from ascii_converter.image_resizer import resize_image
@@ -7,9 +9,15 @@ from ascii_converter.converter import image_to_ascii
 from ascii_converter.svg import ascii_to_svg
 from ascii_converter.layout import build_profile_svg
 from ascii_converter.profile import Profile
+from ascii_converter.github import GitHubStats
+from ascii_converter.github import get_github_stats
+from datetime import datetime, timezone
+
 
 INPUT_IMAGE_PATH = r"C:\Users\Arth Andrey\Pictures\portrait_4.png"
 OUTPUT_SVG_PATH = r"ascii_art_preview.svg"
+
+GITHUB_USERNAME = "yerdnarthc"
 
 # Load the image
 image = load_image(INPUT_IMAGE_PATH)  
@@ -25,7 +33,7 @@ ascii_art = image_to_ascii(image)
 
 # Create a profile object with your details
 profile = Profile(
-    username="yerdnarthc@github",
+    username=f"{GITHUB_USERNAME}@github",   # @github is optional, but it helps to clarify the platform
     operating_system="Windows 11",
     uptime="21 years, 0 months, 29 days",
     host="Lenovo IdeaPad Slim 5 16IMH9",
@@ -76,8 +84,22 @@ profile = Profile(
     discord="iamyerdna",
 )
 
+token = os.environ["GITHUB_TOKEN"]
+
+# # Create the GithubStats object using the provided username and token
+github_stats = get_github_stats(
+    GITHUB_USERNAME,
+    token,
+    datetime(2008, 1, 1, tzinfo=timezone.utc),  # Start date
+    datetime.now(timezone.utc)  # End date
+)
+
 # Build the SVG with the ASCII art and profile information
-svg = build_profile_svg(ascii_art, profile)
+svg = build_profile_svg(
+    ascii_art, 
+    profile,
+    github_stats
+)
 
 # # Save the ASCII art to a text file
 # with open("ascii_art.txt", "w") as f:

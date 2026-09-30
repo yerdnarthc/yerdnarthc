@@ -1,6 +1,6 @@
 # ascii_profile/src/ascii_converter/layout.py
 
-from ascii_converter.profile import Profile
+from ascii_converter.profile import GitHubStats, Profile
 from html import escape
 from .svg import ascii_to_svg_group
 
@@ -376,7 +376,10 @@ def join_items(items: list[str]) -> str:
     return ", ".join(items)
 
 
-def render_profile_info(profile: Profile) -> str:
+def render_profile_info(
+        profile: Profile,
+        github_stats: GitHubStats
+    ) -> str:
     elements = []
 
     # Profile username at the top of the info column, bold and accented
@@ -583,15 +586,15 @@ def render_profile_info(profile: Profile) -> str:
         y,
         "Repos: ",
         [
-            ("95 ", DETAILS_FOREGROUND),
+            (f"{github_stats.repositories} ", DETAILS_FOREGROUND),
             ("{", SECONDARY),
             ("Contributed: ", ACCENT),
-            ("133", DETAILS_FOREGROUND),
+            ("TBA", DETAILS_FOREGROUND),
             ("}", SECONDARY),
         ],
         "Stars: ",
         [
-            ("342", STAR_ACCENT),
+            (f"{github_stats.stars}", STAR_ACCENT),
         ],
     ))
     y += LINE_HEIGHT
@@ -601,11 +604,11 @@ def render_profile_info(profile: Profile) -> str:
         y,
         "Commits: ",
         [
-            ("2,116", DETAILS_FOREGROUND),
+            (f"{github_stats.commits}", DETAILS_FOREGROUND),
         ],
         "Followers: ",
         [
-            ("196", DETAILS_FOREGROUND),
+            (f"{github_stats.followers}", DETAILS_FOREGROUND),
         ],
     ))
     y += LINE_HEIGHT
@@ -615,11 +618,11 @@ def render_profile_info(profile: Profile) -> str:
         y,
         "Lines of Code on GitHub: ",
         [
-            ("446,276 ", DETAILS_FOREGROUND),
+            ("TBA ", DETAILS_FOREGROUND),
             ("(", SECONDARY),
-            ("523,178++", ADDITIONS_ACCENT),
+            ("TBA", ADDITIONS_ACCENT),
             (", ", SECONDARY),
-            ("76,902--", DELETIONS_ACCENT),
+            ("TBA", DELETIONS_ACCENT),
             (")", SECONDARY),
         ],
     ))
@@ -630,7 +633,8 @@ def render_profile_info(profile: Profile) -> str:
 
 def build_profile_svg(
         ascii_art: str,
-        profile: Profile
+        profile: Profile,
+        github_stats: GitHubStats,
     ) -> str:
     """
     Build the complete neofetch-style profile SVG.
@@ -663,7 +667,7 @@ def build_profile_svg(
         {portrait}
     </g>
 
-    {render_profile_info(profile)}
+    {render_profile_info(profile, github_stats)}
 
 </svg>'''
 

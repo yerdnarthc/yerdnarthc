@@ -1,7 +1,7 @@
 # ascii_profile/tests/conftest.py
 
 import pytest
-from ascii_converter.profile import Profile
+from ascii_converter.profile import Profile, GitHubStats
 
 
 @pytest.fixture
@@ -23,4 +23,13 @@ def test_profile():
         email_institutional="school@example.edu",
         linkedin="Test User",
         discord="test",
+    )
+
+@pytest.fixture
+def test_github_stats():
+    return GitHubStats(
+        repositories=10,
+        stars=50,
+        commits=100,
+        followers=200
     )

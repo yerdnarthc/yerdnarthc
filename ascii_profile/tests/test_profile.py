@@ -37,15 +37,15 @@ def test_profile_stores_basic_information():
     assert profile.host == "Test PC"
 
 
-def test_profile_information_appears_in_svg(test_profile):
-    svg = build_profile_svg("@", test_profile)
+def test_profile_information_appears_in_svg(test_profile, test_github_stats):
+    svg = build_profile_svg("@", test_profile, test_github_stats)
 
     assert test_profile.username in svg
     assert test_profile.operating_system in svg
     assert test_profile.host in svg
 
 
-def test_profile_with_empty_fields():
+def test_profile_with_empty_fields(test_github_stats):
     profile = Profile(
         username="",
         operating_system="",
@@ -65,14 +65,14 @@ def test_profile_with_empty_fields():
         discord="",
     )
 
-    svg = build_profile_svg("@", profile)
+    svg = build_profile_svg("@", profile, test_github_stats)
 
     # Ensure that the SVG is generated without errors and contains the ASCII art
     assert svg.startswith("<svg")
     assert "@" in svg
 
 
-def test_profile_information_is_present_and_same_in_svg():
+def test_profile_information_is_present_and_same_in_svg(test_github_stats):
     profile = Profile(
         username="arth@github",
         operating_system="Windows 11",
@@ -92,7 +92,7 @@ def test_profile_information_is_present_and_same_in_svg():
         discord="test_discord_user",
     )
 
-    svg = build_profile_svg("@", profile)
+    svg = build_profile_svg("@", profile, test_github_stats)
 
     # Check that all profile information is present in the SVG
     assert profile.username in svg
@@ -140,3 +140,8 @@ def test_profile_information_is_present_and_same_in_svg():
 
     for value in expected_text:
         assert value in rendered_text
+
+    assert "10 {Contributed: TBA}" in rendered_text
+    assert "50" in rendered_text
+    assert "100" in rendered_text
+    assert "200" in rendered_text

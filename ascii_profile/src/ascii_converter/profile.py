@@ -23,3 +23,12 @@ class Profile:
     email_institutional: str
     linkedin: str
     discord: str
+
+
+@dataclass
+class GitHubStats:
+    repositories: int
+    stars: int
+    commits: int
+    followers: int
+
