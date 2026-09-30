@@ -1,8 +1,8 @@
 <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1000"
-    height="580"
-    viewBox="0 0 1000 580"
+    height="530"
+    viewBox="0 0 1000 530"
 >
 
     <rect
@@ -2178,6 +2178,6 @@
 <text x="954" y="476" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="16" lengthAdjust="spacing"><tspan fill="#DADDDF">13</tspan></text>
 <text x="410" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="216" lengthAdjust="spacing" fill="#E0B629">. Lines of Code on GitHub: </text>
 <text x="626" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="96" lengthAdjust="spacing" fill="#8B949E">............</text>
-<text x="730" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="240" lengthAdjust="spacing"><tspan fill="#DADDDF">964,934 </tspan><tspan fill="#8B949E">(</tspan><tspan fill="#3FB950">484,953++</tspan><tspan fill="#8B949E">, </tspan><tspan fill="#F85149">479,981--</tspan><tspan fill="#8B949E">)</tspan></text>
+<text x="730" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="240" lengthAdjust="spacing"><tspan fill="#DADDDF">964,917 </tspan><tspan fill="#8B949E">(</tspan><tspan fill="#3FB950">484,936++</tspan><tspan fill="#8B949E">, </tspan><tspan fill="#F85149">479,981--</tspan><tspan fill="#8B949E">)</tspan></text>
 
 </svg>

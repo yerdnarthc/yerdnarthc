@@ -10,7 +10,7 @@ from .svg import ascii_to_svg_group
 # ============================================================
 
 CANVAS_WIDTH = 1000
-CANVAS_HEIGHT = 580
+CANVAS_HEIGHT = 530
 
 BACKGROUND = "#0D1117"
 PORTRAIT_FOREGROUND = "#E4C0A3"
