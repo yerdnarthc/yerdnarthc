@@ -2178,10 +2178,6 @@
 <text x="954" y="476" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="16" lengthAdjust="spacing"><tspan fill="#DADDDF">13</tspan></text>
 <text x="410" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="216" lengthAdjust="spacing" fill="#E0B629">. Lines of Code on GitHub: </text>
 <text x="626" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="96" lengthAdjust="spacing" fill="#8B949E">............</text>
-<<<<<<< HEAD
 <text x="730" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="240" lengthAdjust="spacing"><tspan fill="#DADDDF">964,917 </tspan><tspan fill="#8B949E">(</tspan><tspan fill="#3FB950">484,936++</tspan><tspan fill="#8B949E">, </tspan><tspan fill="#F85149">479,981--</tspan><tspan fill="#8B949E">)</tspan></text>
-=======
-<text x="730" y="494" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="240" lengthAdjust="spacing"><tspan fill="#DADDDF">975,478 </tspan><tspan fill="#8B949E">(</tspan><tspan fill="#3FB950">492,889++</tspan><tspan fill="#8B949E">, </tspan><tspan fill="#F85149">482,589--</tspan><tspan fill="#8B949E">)</tspan></text>
->>>>>>> 4ae350269ffbf36d80df95830ad1f804a902b2fc
 
 </svg>
