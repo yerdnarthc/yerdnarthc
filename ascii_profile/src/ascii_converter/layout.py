@@ -40,6 +40,9 @@ PORTRAIT_FONT_SIZE = 13
 PORTRAIT_CHAR_WIDTH = 7
 PORTRAIT_FONT_FAMILY = "Consolas"
 
+PORTRAIT_START_MARKER = "<!-- PORTRAIT_START -->"
+PORTRAIT_END_MARKER = "<!-- PORTRAIT_END -->"
+
 
 # ============================================================
 # INFORMATION COLUMN
@@ -660,15 +663,90 @@ def build_profile_svg(
         github_stats: GitHubStats,
     ) -> str:
     """
-    Build the complete neofetch-style profile SVG.
+    Convert ASCII art and profile data into a complete SVG.
+    Used for the local/full generation (portrait image available).
     """
 
-    portrait = ascii_to_svg_group(
+    portrait_inner = ascii_to_svg_group(
         ascii_art,
         font_size=PORTRAIT_FONT_SIZE,
         font_family=PORTRAIT_FONT_FAMILY,
         char_width=PORTRAIT_CHAR_WIDTH,
     )
+    portrait_svg = render_portrait_group(portrait_inner)
+
+    return _build_profile_svg(
+        portrait_svg,
+        profile,
+        github_stats,
+    )
+
+
+def build_profile_svg_from_portrait(
+        portrait_svg: str,
+        profile: Profile,
+        github_stats: GitHubStats,
+    ) -> str:
+    """
+    Build a complete SVG using an already-rendered portrait fragment.
+
+    Used by the automated GitHub Actions update, where the original
+    portrait image is unavailable. The portrait is read from the
+    previously committed profile.svg via extract_portrait_svg().
+    """
+
+    return _build_profile_svg(
+        portrait_svg,
+        profile,
+        github_stats,
+    )
+
+
+def extract_portrait_svg(svg: str) -> str:
+    """
+    Extract the portrait SVG group from an existing profile SVG.
+
+    Looks for the PORTRAIT_START / PORTRAIT_END markers written by
+    _build_profile_svg() and returns everything between them.
+    """
+
+    try:
+        start = svg.index(PORTRAIT_START_MARKER) + len(PORTRAIT_START_MARKER)
+        end = svg.index(PORTRAIT_END_MARKER)
+    except ValueError as exc:
+        raise RuntimeError(
+            "Could not find portrait markers in profile.svg. "
+            "Regenerate it locally with main.py first."
+        ) from exc
+
+    return svg[start:end].strip()
+
+
+def render_portrait_group(portrait_inner: str) -> str:
+    """Wrap rendered ASCII in the positioned outer portrait group.
+
+    Kept separate so the local build and the Actions rebuild share the
+    exact same wrapper. extract_portrait_svg() returns this whole block,
+    and _build_profile_svg() inserts it verbatim (no second wrapper),
+    which keeps extract -> rebuild idempotent.
+    """
+    return (
+        f'<g transform="translate({PORTRAIT_X}, {PORTRAIT_Y})"\n'
+        f'     fill="{PORTRAIT_FOREGROUND}">\n'
+        f'    {portrait_inner}\n'
+        f'</g>'
+    )
+
+
+def _build_profile_svg(
+        portrait_svg: str,
+        profile: Profile,
+        github_stats: GitHubStats,
+    ) -> str:
+    """
+    Build the complete neofetch-style profile SVG
+    using an already-rendered portrait SVG group.
+    """
 
     svg = f'''<svg
     xmlns="http://www.w3.org/2000/svg"
@@ -685,10 +763,9 @@ def build_profile_svg(
         stroke="{BORDER}"
     />
 
-    <g transform="translate({PORTRAIT_X}, {PORTRAIT_Y})"
-         fill="{PORTRAIT_FOREGROUND}">
-        {portrait}
-    </g>
+    {PORTRAIT_START_MARKER}
+    {portrait_svg}
+    {PORTRAIT_END_MARKER}
 
     {render_profile_info(profile, github_stats)}
 

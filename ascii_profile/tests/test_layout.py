@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 
+import pytest
+
 from ascii_converter.layout import (
 	ADDITIONS_ACCENT,
 	DELETIONS_ACCENT,
@@ -9,8 +11,10 @@ from ascii_converter.layout import (
 	SECONDARY,
 	additions_segment,
 	build_profile_svg,
+	build_profile_svg_from_portrait,
 	colored_text_row,
 	deletions_segment,
+	extract_portrait_svg,
 	format_count,
 	github_stats_row,
 	key_value,
@@ -102,6 +106,25 @@ def test_deletions_segment_is_red_with_minus_suffix():
 
 	assert text == "76,902--"
 	assert fill == DELETIONS_ACCENT
+
+
+def test_portrait_round_trip_preserves_artwork(test_profile, test_github_stats):
+	# Full build embeds markers + portrait; extract + rebuild from the
+	# fragment must keep the identical portrait while allowing fresh stats.
+	full = build_profile_svg("@@", test_profile, test_github_stats)
+	portrait = extract_portrait_svg(full)
+
+	assert "@" in portrait
+
+	rebuilt = build_profile_svg_from_portrait(portrait, test_profile, test_github_stats)
+
+	assert extract_portrait_svg(rebuilt) == portrait
+	assert "GitHub Stats" in rebuilt
+
+
+def test_extract_portrait_fails_without_markers():
+	with pytest.raises(RuntimeError, match="portrait markers"):
+		extract_portrait_svg("<svg></svg>")
 
 
 # def test_profile_svg_contains_github_stats_section():

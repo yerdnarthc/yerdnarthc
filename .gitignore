@@ -39,3 +39,11 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+
+# Local-only artifacts (do NOT commit the portrait source or previews).
+# profile.svg itself is the committed artifact, so never ignore it.
+ascii_art_preview.svg
+preview.svg
+portrait*.png
+portrait*.jpg
+portrait*.jpeg
