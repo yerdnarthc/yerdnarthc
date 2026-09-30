@@ -2,6 +2,7 @@
 
 import pytest
 from PIL import Image
+from pathlib import Path
 
 from ascii_converter.grayscale import convert_to_grayscale
 from ascii_converter.image_loader import load_image
@@ -27,7 +28,7 @@ def test_load_image_grayscale(tmp_path):
 
 def test_load_image_invalid_path():
     # Test loading an image from an invalid path
-    invalid_image_path = "non_existent_image.png"
+    invalid_image_path = Path("non_existent_image.png")
     try:
         load_image(invalid_image_path)
     except FileNotFoundError as e:
