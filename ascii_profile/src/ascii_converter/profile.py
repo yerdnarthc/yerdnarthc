@@ -30,5 +30,9 @@ class GitHubStats:
     repositories: int
     stars: int
     commits: int
+    contributions: int
     followers: int
+    lines_of_code: int
+    lines_of_code_additions: int
+    lines_of_code_deletions: int
 

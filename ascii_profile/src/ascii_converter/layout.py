@@ -376,6 +376,29 @@ def join_items(items: list[str]) -> str:
     return ", ".join(items)
 
 
+def format_count(value: int) -> str:
+    """Format a GitHub Stats number with thousands separators.
+
+    950 -> "950", 2116 -> "2,116", 446276 -> "446,276".
+    Uses Python's `:,` format spec (comma grouping).
+    """
+    if not isinstance(value, int):
+        raise TypeError("GitHub Stats count must be an int.")
+    if value < 0:
+        raise ValueError("GitHub Stats count must be non-negative.")
+    return f"{value:,}"
+
+
+def additions_segment(value: int) -> tuple[str, str]:
+    """Style a lines-added value: green text with `++` suffix."""
+    return (f"{format_count(value)}++", ADDITIONS_ACCENT)
+
+
+def deletions_segment(value: int) -> tuple[str, str]:
+    """Style a lines-removed value: red text with `--` suffix."""
+    return (f"{format_count(value)}--", DELETIONS_ACCENT)
+
+
 def render_profile_info(
         profile: Profile,
         github_stats: GitHubStats
@@ -586,15 +609,15 @@ def render_profile_info(
         y,
         "Repos: ",
         [
-            (f"{github_stats.repositories} ", DETAILS_FOREGROUND),
+            (f"{format_count(github_stats.repositories)} ", DETAILS_FOREGROUND),
             ("{", SECONDARY),
             ("Contributed: ", ACCENT),
-            ("TBA", DETAILS_FOREGROUND),
+            (format_count(github_stats.contributions), DETAILS_FOREGROUND),
             ("}", SECONDARY),
         ],
         "Stars: ",
         [
-            (f"{github_stats.stars}", STAR_ACCENT),
+            (format_count(github_stats.stars), STAR_ACCENT),
         ],
     ))
     y += LINE_HEIGHT
@@ -604,11 +627,11 @@ def render_profile_info(
         y,
         "Commits: ",
         [
-            (f"{github_stats.commits}", DETAILS_FOREGROUND),
+            (format_count(github_stats.commits), DETAILS_FOREGROUND),
         ],
         "Followers: ",
         [
-            (f"{github_stats.followers}", DETAILS_FOREGROUND),
+            (format_count(github_stats.followers), DETAILS_FOREGROUND),
         ],
     ))
     y += LINE_HEIGHT
@@ -618,11 +641,11 @@ def render_profile_info(
         y,
         "Lines of Code on GitHub: ",
         [
-            ("TBA ", DETAILS_FOREGROUND),
+            (f"{format_count(github_stats.lines_of_code)} ", DETAILS_FOREGROUND),
             ("(", SECONDARY),
-            ("TBA", ADDITIONS_ACCENT),
+            additions_segment(github_stats.lines_of_code_additions),
             (", ", SECONDARY),
-            ("TBA", DELETIONS_ACCENT),
+            deletions_segment(github_stats.lines_of_code_deletions),
             (")", SECONDARY),
         ],
     ))

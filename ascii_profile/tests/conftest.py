@@ -31,5 +31,9 @@ def test_github_stats():
         repositories=10,
         stars=50,
         commits=100,
-        followers=200
+        contributions=300,
+        followers=200,
+        lines_of_code=1000,
+        lines_of_code_additions=700,
+        lines_of_code_deletions=200,
     )

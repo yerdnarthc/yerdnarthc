@@ -87,11 +87,14 @@ profile = Profile(
 token = os.environ["GITHUB_TOKEN"]
 
 # # Create the GithubStats object using the provided username and token
+# TEMP DEBUG: debug=True prints per-repo +A/-D lines so you can
+# verify the LOC totals. Set back to False (or remove) when done.
 github_stats = get_github_stats(
     GITHUB_USERNAME,
     token,
     datetime(2008, 1, 1, tzinfo=timezone.utc),  # Start date
-    datetime.now(timezone.utc)  # End date
+    datetime.now(timezone.utc),  # End date
+    debug=False,
 )
 
 # Build the SVG with the ASCII art and profile information
