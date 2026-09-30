@@ -1,5 +1,6 @@
 # ascii_profile/src/ascii_converter/layout.py
 
+from ascii_converter.profile import Profile
 from html import escape
 from .svg import ascii_to_svg_group
 
@@ -371,14 +372,19 @@ def github_full_row(
     return stat_field(y, key, value_segments, INFO_X, INFO_RIGHT_X, bullet=bullet)
 
 
-def render_profile_info() -> str:
+def join_items(items: list[str]) -> str:
+    return ", ".join(items)
+
+
+def render_profile_info(profile: Profile) -> str:
     elements = []
 
+    # Profile username at the top of the info column, bold and accented
     elements.append(
         text_element(
             INFO_X,
             INFO_Y,
-            "arth@github",
+            profile.username,
             font_size=16,
             fill=ACCENT,
             font_weight="bold",
@@ -388,6 +394,7 @@ def render_profile_info() -> str:
     DIVIDER_MARGIN_TOP = 20
     DIVIDER_MARGIN_BOTTOM = 20
 
+    # Add some vertical space after the username
     y = INFO_Y + DIVIDER_MARGIN_TOP
 
     elements.append(
@@ -402,74 +409,109 @@ def render_profile_info() -> str:
 
     y += DIVIDER_MARGIN_BOTTOM
 
-    elements.append(key_value(y, "OS:", "Windows 11"))
+    # OS Label
+    elements.append(
+        key_value(
+            y, 
+            "OS:", 
+            profile.operating_system
+        ))
     y += LINE_HEIGHT
 
+    # Uptime Label
     # Hardcoded for now, but could be dynamically generated in the future
-    elements.append(key_value(y, "Uptime:", "21 years, 0 months, 29 days"))
+    elements.append(
+        key_value(
+            y, 
+            "Uptime:", 
+            profile.uptime
+        ))
     y += LINE_HEIGHT
 
-    elements.append(key_value(y, "Host:", "Lenovo IdeaPad Slim 5"))
+    # Host Label
+    elements.append(
+        key_value(
+            y, 
+            "Host:", 
+            profile.host
+        ))
     y += LINE_HEIGHT
 
-    elements.append(key_value(y, "Kernel:", "Windows NT"))
+    # Kernel Label
+    elements.append(
+        key_value(
+            y, 
+            "Kernel:", 
+            profile.kernel
+        ))
     y += LINE_HEIGHT
 
+    # IDE Label
     elements.append(key_value(
         y,
         "IDE:",
-        "Visual Studio, VS Code, IntelliJ IDEA, Android Studio",
+        profile.ide,
     ))
     y += LINE_HEIGHT
-    
+
+    # Projects Label
     elements.append(key_value(
         y, 
         "Projects:", 
-        "BantAI Buddy, N-Queens Visualizer, VWSIM, DeskDuck"
+        join_items(profile.projects)
     ))
     y += LINE_HEIGHT
 
+    # Newline before the Languages section
     y += LINE_HEIGHT
 
+    # Programming Languages Label
     elements.append(key_value(
         y,
         "Languages.Programming:",
-        "C, C++, Java, Python, C#, JS",
+        join_items(profile.programming_languages),
     ))
     y += LINE_HEIGHT
 
+    # Other Languages Label
     elements.append(key_value(
         y,
         "Languages.Other:",
-        "HTML, CSS, JSON, SQL, Bash, Powershell",
+        join_items(profile.other_languages),
     ))
     y += LINE_HEIGHT
 
+    # Real Languages Label
     elements.append(key_value(
         y,
         "Languages.Real:",
-        "English, Filipino, Cebuano",
+        join_items(profile.real_languages),
     ))
     y += LINE_HEIGHT
 
+    # Newline before the Hobbies section
     y += LINE_HEIGHT
 
+    # Software Hobbies Label
     elements.append(key_value(
         y,
         "Hobbies.Software:",
-        "Music Production, VFX, AI Pipelines",
+        join_items(profile.software_hobbies),
     ))
     y += LINE_HEIGHT
 
+    # Hardware Hobbies Label
     elements.append(key_value(
         y,
         "Hobbies.Hardware:",
-        "Tinkering, Benchmarking, Audio Gear",
+        join_items(profile.hardware_hobbies),
     ))
     y += LINE_HEIGHT
 
+    # Newline before the Contacts section
     y += LINE_HEIGHT
 
+    # Contacts section header
     elements.append(
         section_header(
             y, 
@@ -481,44 +523,50 @@ def render_profile_info() -> str:
     )
     y += LINE_HEIGHT
 
+    # Personal Email Label
     elements.append(
         key_value(
             y,
             "Email.Personal:",
-            "arthandrey16@gmail.com",
+            profile.email_personal,
         )
     )
     y += LINE_HEIGHT
 
+    # Institutional Email Label
     elements.append(
         key_value(
             y,
             "Email.Institutional:",
-            "arthandrey.endrina@cit.edu",
+            profile.email_institutional,
         )
     )
     y += LINE_HEIGHT
 
+    # LinkedIn Label
     elements.append(
         key_value(
             y,
             "LinkedIn:",
-            "Arth Andrey Endrina",
+            profile.linkedin,
         )
     )
     y += LINE_HEIGHT
 
+    # Discord Label
     elements.append(
         key_value(
             y,
             "Discord:",
-            "iamyerdna",
+            profile.discord,
         )
     )
     y += LINE_HEIGHT
 
+    # Newline before the GitHub Stats section
     y += LINE_HEIGHT
 
+    # GitHub Stats section header
     elements.append(
         section_header(
             y, 
@@ -530,6 +578,7 @@ def render_profile_info() -> str:
     )
     y += LINE_HEIGHT
 
+    # GitHub Stats row 1: Contains Repos and Stars with a divider
     elements.append(github_two_col_row(
         y,
         "Repos: ",
@@ -547,6 +596,7 @@ def render_profile_info() -> str:
     ))
     y += LINE_HEIGHT
 
+    # GitHub Stats row 2: Contains Commits and Followers with a divider
     elements.append(github_two_col_row(
         y,
         "Commits: ",
@@ -560,6 +610,7 @@ def render_profile_info() -> str:
     ))
     y += LINE_HEIGHT
 
+    # GitHub Stats row 3: Contains Lines of Code with additions and deletions
     elements.append(github_full_row(
         y,
         "Lines of Code on GitHub: ",
@@ -577,7 +628,10 @@ def render_profile_info() -> str:
     return "\n".join(elements)
 
 
-def build_profile_svg(ascii_art: str) -> str:
+def build_profile_svg(
+        ascii_art: str,
+        profile: Profile
+    ) -> str:
     """
     Build the complete neofetch-style profile SVG.
     """
@@ -609,7 +663,7 @@ def build_profile_svg(ascii_art: str) -> str:
         {portrait}
     </g>
 
-    {render_profile_info()}
+    {render_profile_info(profile)}
 
 </svg>'''
 

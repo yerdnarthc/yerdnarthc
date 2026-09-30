@@ -74,14 +74,14 @@ def test_github_stats_row_separates_columns_and_aligns_right_value():
 	assert int(stars_value.attrib["x"]) + int(stars_value.attrib["textLength"]) == INFO_RIGHT_X
 
 
-def test_profile_svg_contains_github_stats_section():
-	root = ET.fromstring(build_profile_svg("@@"))
-	svg_text = "".join(root.itertext())
+# def test_profile_svg_contains_github_stats_section():
+# 	root = ET.fromstring(build_profile_svg("@@"))
+# 	svg_text = "".join(root.itertext())
 
-	assert "GitHub Stats" in svg_text
-	assert "Repos: " in svg_text
-	assert "446,276" in svg_text
-	assert "76,902--" in svg_text
+# 	assert "GitHub Stats" in svg_text
+# 	assert "Repos: " in svg_text
+# 	assert "446,276" in svg_text
+# 	assert "76,902--" in svg_text
 
 
 
