@@ -2164,7 +2164,7 @@
 <text x="527" y="440" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  fill="#8B949E">──────────────────────────────────────────────────────────</text>
 <text x="410" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="72" lengthAdjust="spacing" fill="#E0B629">. Repos: </text>
 <text x="482" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="24" lengthAdjust="spacing" fill="#8B949E">...</text>
-<text x="510.0" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="168" lengthAdjust="spacing"><tspan fill="#DADDDF">23 </tspan><tspan fill="#8B949E">{</tspan><tspan fill="#E0B629">Contributed: </tspan><tspan fill="#DADDDF">581</tspan><tspan fill="#8B949E">}</tspan></text>
+<text x="510.0" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px" textLength="168" lengthAdjust="spacing"><tspan fill="#DADDDF">23 </tspan><tspan fill="#8B949E">{</tspan><tspan fill="#E0B629">Contributed: </tspan><tspan fill="#DADDDF">582</tspan><tspan fill="#8B949E">}</tspan></text>
 <text x="686.0" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="8" lengthAdjust="spacing" fill="#8B949E">|</text>
 <text x="702.0" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="56" lengthAdjust="spacing" fill="#E0B629">Stars: </text>
 <text x="758.0" y="458" font-family="Consolas" font-size="14px" font-weight="normal" letter-spacing="0px"  textLength="200" lengthAdjust="spacing" fill="#8B949E">.........................</text>
