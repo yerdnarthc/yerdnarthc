@@ -32,7 +32,7 @@ def generate_profile() -> None:
     # Convert the image to ASCII
     ascii_art = image_to_ascii(image)
 
-    # Static profile fields (single source of truth in profile_data.py)
+    # Shared profile fields, including today's uptime, from profile_data.py.
     profile = create_profile()
 
     token = os.environ["GITHUB_TOKEN"]
