@@ -241,7 +241,7 @@ def render_profile_info(profile: Profile, github_stats: GitHubStats) -> str:
         [(format_count(github_stats.followers), DETAILS_FOREGROUND)],
     ))
     y += LINE_HEIGHT
-    elements.append(stat_field(y, "Lines of Code on GitHub:", [
+    elements.append(stat_field(y, "Lines Changed on GitHub:", [
         (f"{format_count(github_stats.lines_of_code)} ", DETAILS_FOREGROUND),
         ("(", SECONDARY),
         additions_segment(github_stats.lines_of_code_additions),
