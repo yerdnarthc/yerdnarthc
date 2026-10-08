@@ -24,7 +24,7 @@ def generate_profile() -> None:
     image = load_image(PORTRAIT_IMAGE_PATH)
 
     # Desired dimensions
-    width, height = 55, 38
+    width, height = 47, 32
 
     # Resize the image
     image = resize_image(image, (width, height))
@@ -32,7 +32,7 @@ def generate_profile() -> None:
     # Convert the image to ASCII
     ascii_art = image_to_ascii(image)
 
-    # Static profile fields (single source of truth in profile_data.py)
+    # Shared profile fields, including today's uptime, from profile_data.py.
     profile = create_profile()
 
     token = os.environ["GITHUB_TOKEN"]
