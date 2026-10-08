@@ -24,7 +24,7 @@ def generate_profile() -> None:
     image = load_image(PORTRAIT_IMAGE_PATH)
 
     # Desired dimensions
-    width, height = 55, 38
+    width, height = 47, 32
 
     # Resize the image
     image = resize_image(image, (width, height))
