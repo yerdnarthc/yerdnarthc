@@ -112,49 +112,35 @@ def test_profile_information_is_present_and_same_in_svg(test_github_stats):
     assert profile.linkedin in svg
     assert profile.discord in svg
 
-    # Compare exact rendered text nodes, avoiding substring-count collisions.
+    # Compare complete inline rows, independent of SVG segment boundaries.
     rendered_text = svg_text_nodes(svg)
     expected_text = [
         profile.username,
-        profile.operating_system,
-        profile.uptime,
-        profile.host,
-        profile.kernel,
-        profile.ide,
-        profile.email_personal,
-        profile.email_institutional,
-        profile.linkedin,
-        profile.discord,
+        f"OS: {profile.operating_system}",
+        f"Uptime: {profile.uptime}",
+        f"Host: {profile.host}",
+        f"Kernel: {profile.kernel}",
+        f"IDE: {profile.ide}",
+        f"Email.Personal: {profile.email_personal}",
+        f"Email.Institutional: {profile.email_institutional}",
+        f"LinkedIn: {profile.linkedin}",
+        f"Discord: {profile.discord}",
     ]
 
-    for items in (
-        profile.projects,
-        profile.programming_languages,
-        profile.other_languages,
-        profile.real_languages,
-        profile.software_hobbies,
-        profile.hardware_hobbies,
+    for key, items in (
+        ("Projects", profile.projects),
+        ("Languages.Programming", profile.programming_languages),
+        ("Languages.Other", profile.other_languages),
+        ("Languages.Real", profile.real_languages),
+        ("Hobbies.Software", profile.software_hobbies),
+        ("Hobbies.Hardware", profile.hardware_hobbies),
     ):
         if items:
-            expected_text.append(", ".join(items))
+            expected_text.append(f"{key}: {', '.join(items)}")
 
     for value in expected_text:
         assert value in rendered_text
 
-    # GitHub Stats reflect the live layout pipeline:
-    # - left keys carry the "." bullet like key_value rows
-    # - repos + contributions render as one value block "10 {Contributed: 300}"
-    #   (segmented <tspan>s joined by itertext)
-    # - two-col divider is a single "|" with equal gaps
-    # - LOC row renders as one value block "1,000 (700++, 200--)"
-    assert ". Repos: " in rendered_text
-    assert ". Commits: " in rendered_text
-    assert ". Lines of Code on GitHub: " in rendered_text
-    assert "Stars: " in rendered_text
-    assert "Followers: " in rendered_text
-    assert "|" in rendered_text
-    assert "10 {Contributed: 300}" in rendered_text
-    assert "50" in rendered_text
-    assert "100" in rendered_text
-    assert "200" in rendered_text
-    assert "1,000 (700++, 200--)" in rendered_text
+    assert "Repos: 10 {Contributed: 300} | Stars: 50" in rendered_text
+    assert "Commits: 100 | Followers: 200" in rendered_text
+    assert "Lines of Code on GitHub: 1,000 (700++, 200--)" in rendered_text
