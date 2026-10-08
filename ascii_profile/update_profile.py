@@ -43,7 +43,7 @@ def main() -> None:
     )
 
     # --------------------------------------------------------
-    # Rebuild profile data (static fields from profile_data.py)
+    # Rebuild profile fields and today's uptime from profile_data.py.
     # --------------------------------------------------------
     profile = create_profile()
 
